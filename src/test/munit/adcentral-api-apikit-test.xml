@@ -25,7 +25,9 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
                     <munit-tools:with-attribute whereValue="common-database_config" attributeName="config-ref" />
                 </munit-tools:with-attributes>
                 <munit-tools:then-return >
-                    <munit-tools:payload value="#[MunitTools::getResourceAsString('scaffolder/response/mock-db-response.json')]" mediaType="application/json" />
+                    <munit-tools:payload value='#[{
+    "COUNT(*)": [4]
+}]' mediaType="application/java" />
                 </munit-tools:then-return>
             </munit-tools:mock-when>
         </munit:behavior>
