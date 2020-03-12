@@ -40,6 +40,7 @@
 					      <username>srikanth-mulesoft</username>
 					      <password>Rockstar7*</password>
 					      <environment>Sandbox</environment>
+			    		      <skipDeploymentVerification>true</skipDeploymentVerification>
 					      <properties>
 					        <env>qa</env>
 					      </properties>
