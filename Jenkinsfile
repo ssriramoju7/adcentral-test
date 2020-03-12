@@ -7,7 +7,8 @@ node {
 	}
 
 	stage('Mvn Package'){
-	   
-	   sh 'mvn package -Denv=qa'
+
+	   def mvnHome= tool name: 'maven', type: 'maven'   
+	   sh "${mvnHome}/bin/mvn package -Denv=qa"
    }
 }
