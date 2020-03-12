@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<flow name="get-all-advertiser-actions-row-count-fl" doc:id="d1b16c8a-90e4-4977-bd69-3e701102c974" >
+		<ee:transform doc:name="Creates the DB Query" doc:id="1006fd25-cb23-44a6-b95e-dacbda368ad7" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="dbQuery" ><![CDATA[%dw 2.0
+output application/java
+---
+"select COUNT(*) FROM " ++ p('secure::db.name') ++ "." ++ p('secure::db.table') ++ " where " ++ p('secure::db.checkParam') ++ " Between " ++ attributes.queryParams['advId_start'] ++ " AND " ++ attributes.queryParams['advId_end'] ++ ";" ]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<db:select doc:name="Get Advtiser Actions Row Count" doc:id="5add4194-1e80-4d03-8cd5-ca6bbbd1ec02" config-ref="common-database_config">
+			<db:sql >#[vars.dbQuery]</db:sql>
+		</db:select>
+		<ee:transform doc:name="Set Response Payload" doc:id="529dacf0-6f43-4ff5-b769-1c3055f1516e">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"count" : payload.'COUNT(*)'[0]
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="get-all-advertiser-actions-by-advertiserId-range-fl" doc:id="618d0b9b-3e00-485b-8911-c76b3fd305a2" >
+		<ee:transform doc:name="Creates the DB Query" doc:id="b9e91802-9ef0-492d-9ded-e02c5187ec91" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="dbQuery" ><![CDATA[%dw 2.0
+output application/java
+---
+"select * FROM " ++ p('secure::db.name') ++ "." ++ p('secure::db.table') ++ " where " ++ p('secure::db.checkParam') ++ " Between " ++ attributes.queryParams['advId_start'] ++ " AND " ++ attributes.queryParams['advId_end'] ++ ";" ]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<db:select doc:name="Get All Advtiser Actions Data" doc:id="f6ec1662-1f48-4951-af61-4ac3de7b5eaf" config-ref="common-database_config" >
+			<db:sql >#[vars.dbQuery]</db:sql>
+		</db:select>
+		<ee:transform doc:name="Set Response Payload" doc:id="bb3f9e01-9db5-49a7-9cd0-f948899c8c15" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="get-valid-advertiser-actions-by-advertiserId-range-fl" doc:id="2737dc4f-616e-4850-b3ab-368e64b1b527" >
+		<ee:transform doc:name="Creates the DB Query" doc:id="967652a1-5bea-453c-9a37-00dcd5adc556" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="dbQuery" ><![CDATA[%dw 2.0
+output application/java
+---
+"SELECT account_id, advertiser_id, activity_date, sj_rev, resume_rev, dradis, resume FROM " ++ p('secure::db.name') ++ "." ++ p('secure::db.table') ++ " WHERE "  ++ p('secure::db.checkParam') ++ " >= "  ++ attributes.queryParams['advId_start'] ++ " AND " ++ p('secure::db.checkParam')   ++ " < "  ++ attributes.queryParams['advId_end'] ++ " " ++ p('secure::db.getValidAdvertiserActionsByAdvertiserIdRange.condition')]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<db:select doc:name="Get Valid Advtiser Actions Data" doc:id="ebce4662-7241-4dac-936a-b84533e77f7d" config-ref="common-database_config" >
+			<db:sql >#[vars.dbQuery]</db:sql>
+		</db:select>
+		<ee:transform doc:name="Set Response Payload" doc:id="b7beb44c-1774-467c-846d-3f465b8389aa" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
