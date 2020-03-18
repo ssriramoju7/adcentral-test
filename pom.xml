@@ -39,8 +39,7 @@
 					      <targetType>server</targetType>
 					      <username>srikanth-mulesoft</username>
 					      <password>Rockstar7*</password>
-					      <environment>Sandbox</environment>
-			    		      <skipDeploymentVerification>true</skipDeploymentVerification>
+					      <environment>sandbox</environment>
 					      <properties>
 					        <env>qa</env>
 					      </properties>
@@ -94,7 +93,7 @@
     	<dependency>
             <groupId>c95c76c8-3de9-4105-a70c-ad3e186c58ae</groupId>
             <artifactId>adcentral-api</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.5</version>
             <classifier>raml</classifier>
             <type>zip</type>
         </dependency>

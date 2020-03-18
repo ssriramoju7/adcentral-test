@@ -38,7 +38,10 @@ output application/json
 				<ee:set-variable variableName="dbQuery" ><![CDATA[%dw 2.0
 output application/java
 ---
-"select * FROM " ++ p('secure::db.name') ++ "." ++ p('secure::db.table') ++ " where " ++ p('secure::db.checkParam') ++ " Between " ++ attributes.queryParams['advId_start'] ++ " AND " ++ attributes.queryParams['advId_end'] ++ ";" ]]></ee:set-variable>
+"select * FROM " ++ p('secure::db.name') ++ "." ++ p('secure::db.table') ++ " where " ++ p('secure::db.checkParam') ++ " Between " ++ attributes.queryParams['advId_start'] ++ " AND " ++ attributes.queryParams['advId_end'] 
+ ++ " LIMIT " ++ attributes.queryParams.limit
+ ++ ( if (attributes.queryParams.offset == null) (" ;") else (" OFFSET " ++ attributes.queryParams.offset ++ " ;" ))
+ ++ ";" ]]></ee:set-variable>
 			</ee:variables>
 		</ee:transform>
 		<db:select doc:name="Get All Advtiser Actions Data" doc:id="f6ec1662-1f48-4951-af61-4ac3de7b5eaf" config-ref="common-database_config" >
@@ -61,7 +64,11 @@ payload]]></ee:set-payload>
 				<ee:set-variable variableName="dbQuery" ><![CDATA[%dw 2.0
 output application/java
 ---
-"SELECT account_id, advertiser_id, activity_date, sj_rev, resume_rev, dradis, resume FROM " ++ p('secure::db.name') ++ "." ++ p('secure::db.table') ++ " WHERE "  ++ p('secure::db.checkParam') ++ " >= "  ++ attributes.queryParams['advId_start'] ++ " AND " ++ p('secure::db.checkParam')   ++ " < "  ++ attributes.queryParams['advId_end'] ++ " " ++ p('secure::db.getValidAdvertiserActionsByAdvertiserIdRange.condition')]]></ee:set-variable>
+"SELECT account_id, advertiser_id, activity_date, sj_rev, resume_rev, dradis, resume FROM " ++ p('secure::db.name') ++ "." ++ p('secure::db.table') ++ " WHERE "  ++ p('secure::db.checkParam') ++ " >= "  ++ attributes.queryParams['advId_start'] ++ " AND " ++ p('secure::db.checkParam')   ++ " < "  ++ attributes.queryParams['advId_end'] ++ " " ++ p('secure::db.getValidAdvertiserActionsByAdvertiserIdRange.condition')
+
+
+ ++ " LIMIT " ++ attributes.queryParams.limit
+ ++ ( if (attributes.queryParams.offset == null) (" ;") else (" OFFSET " ++ attributes.queryParams.offset ++ " ;" ))]]></ee:set-variable>
 			</ee:variables>
 		</ee:transform>
 		<db:select doc:name="Get Valid Advtiser Actions Data" doc:id="ebce4662-7241-4dac-936a-b84533e77f7d" config-ref="common-database_config" >

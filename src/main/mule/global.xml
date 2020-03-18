@@ -17,8 +17,8 @@ http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/m
 		<db:my-sql-connection host="#[p('secure::db.host')]" port="#[p('secure::db.port')]" user="#[p('secure::db.user')]" password="${secure::db.password}" database="#[p('secure::db.name')]"/>
 	</db:config> -->
 	<configuration-properties doc:name="Configuration properties" doc:id="1e5ba9d3-7836-4f58-8617-a16edb376fc3" file="${env}/app-${env}.properties" />
-	<api-gateway:autodiscovery apiId="${apiId}" doc:name="API Autodiscovery" doc:id="f59e23dc-066d-421b-93b6-f2e90900e57d" flowRef="adcentral-api-main" />
-	<sub-flow name="validation-componet-fl" doc:id="31954d6b-e3d0-45a0-af67-5b260b4f16de" >
+	<!-- <api-gateway:autodiscovery apiId="${apiId}" doc:name="API Autodiscovery" doc:id="f59e23dc-066d-421b-93b6-f2e90900e57d" flowRef="adcentral-api-main" />
+ -->	<sub-flow name="validation-componet-fl" doc:id="31954d6b-e3d0-45a0-af67-5b260b4f16de" >
 		 <validation:is-true doc:id="f5518562-1c46-4899-8e7c-49ac4c8221a5" expression="#[attributes.queryParams['advId_start'] &lt;= attributes.queryParams['advId_end']]" message="#['Provided advId_start value : ' ++ attributes.queryParams['advId_start'] ++  ' is greater than advId_end value : ' ++ attributes.queryParams['advId_end']]" />
 	</sub-flow>
 	<error-handler name="globalError_Handler" doc:id="c5958c46-02ee-4369-802c-57b116855fce" >

@@ -3,9 +3,9 @@
     <http:listener-config name="adcentral-api-httpListenerConfig">
         <http:listener-connection host="0.0.0.0" port="8082" />
     </http:listener-config>
-    <apikit:config name="adcentral-api-config" api="resource::c95c76c8-3de9-4105-a70c-ad3e186c58ae:adcentral-api:1.0.1:raml:zip:adcentral-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+    <apikit:config name="adcentral-api-config" api="resource::c95c76c8-3de9-4105-a70c-ad3e186c58ae:adcentral-api:1.0.5:raml:zip:adcentral-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
     <flow name="adcentral-api-main">
-        <http:listener config-ref="common-https-config" path="/api/*">
+        <http:listener config-ref="common-https-config" path="/api/adcentral-sys-api/*">
             <http:response statusCode="#[vars.httpStatus default 200]">
                 <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
             </http:response>
@@ -18,7 +18,7 @@
         <error-handler ref="globalError_Handler" />
     </flow>
     <flow name="adcentral-api-console">
-        <http:listener config-ref="common-https-config" path="/console/*">
+        <http:listener config-ref="common-https-config" path="/adcentral-sys-api/console/*">
             <http:response statusCode="#[vars.httpStatus default 200]">
                 <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
             </http:response>
@@ -30,15 +30,15 @@
         <apikit:console config-ref="adcentral-api-config" />
     </flow>
     <flow name="get:\employerAction\getAllAdvertiserActionsByAdvertiserIdRange:adcentral-api-config">
-		<flow-ref doc:name="Validates the Incoming Request" doc:id="56c85627-2d5f-45bc-a2f4-d05e6fd54354" name="validation-componet-fl" />
-		<flow-ref doc:name="Get all Advertiser Actions by AdvertiserId Range" doc:id="9b93279e-0f2e-460f-b8d8-4ada3d43c870" name="get-all-advertiser-actions-by-advertiserId-range-fl"/>
+        <flow-ref doc:name="Validates the Incoming Request" doc:id="56c85627-2d5f-45bc-a2f4-d05e6fd54354" name="validation-componet-fl" />
+        <flow-ref doc:name="Get all Advertiser Actions by AdvertiserId Range" doc:id="9b93279e-0f2e-460f-b8d8-4ada3d43c870" name="get-all-advertiser-actions-by-advertiserId-range-fl" />
     </flow>
     <flow name="get:\employerAction\getAllAdvertiserActionsRowCount:adcentral-api-config">
-        <flow-ref doc:name="Validates the Incoming Request" doc:id="9e107b64-6274-4a7b-8eea-8a1f4a2d8334" name="validation-componet-fl"/>
-		<flow-ref doc:name="Get all Advertiser Actions Row Countl" doc:id="b42b58dc-e1c2-4b8e-990e-01b5f3899b80" name="get-all-advertiser-actions-row-count-fl"/>
+        <flow-ref doc:name="Validates the Incoming Request" doc:id="9e107b64-6274-4a7b-8eea-8a1f4a2d8334" name="validation-componet-fl" />
+        <flow-ref doc:name="Get all Advertiser Actions Row Countl" doc:id="b42b58dc-e1c2-4b8e-990e-01b5f3899b80" name="get-all-advertiser-actions-row-count-fl" />
     </flow>
     <flow name="get:\employerAction\getValidAdvertiserActionsByAdvertiserIdRange:adcentral-api-config">
-		<flow-ref doc:name="Validates the Incoming Request" doc:id="21f301cc-4fc8-4f37-8db2-3f6ef4c9a05c" name="validation-componet-fl" />
-		<flow-ref doc:name="Get Valid Advertiser Actions by AdvertiserId Range" doc:id="bccf0bec-e801-4d61-8888-ae33799377b6" name="get-valid-advertiser-actions-by-advertiserId-range-fl"/>
+        <flow-ref doc:name="Validates the Incoming Request" doc:id="21f301cc-4fc8-4f37-8db2-3f6ef4c9a05c" name="validation-componet-fl" />
+        <flow-ref doc:name="Get Valid Advertiser Actions by AdvertiserId Range" doc:id="bccf0bec-e801-4d61-8888-ae33799377b6" name="get-valid-advertiser-actions-by-advertiserId-range-fl" />
     </flow>
 </mule>
