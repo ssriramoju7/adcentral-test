@@ -14,7 +14,9 @@ node {
 	   sh "pwd"
 	  echo " below is list of applications deployed"
 	  sh "rm -rf commandResultFile"
+	  def script = sh "anypoint-cli --username=srikanth-mulesoft --password=Rockstar7* --environment Sandbox runtime-mgr standalone-application list"
 	  sh "anypoint-cli --username=srikanth-mulesoft --password=Rockstar7* --environment Sandbox runtime-mgr standalone-application list -o text -f Application > commandResultFile"
+	  echo "$script"
 	  def applicationsList = readFile('commandResultFile').trim()
 	  echo "applicationsList is $applicationsList"
 
