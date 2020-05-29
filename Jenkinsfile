@@ -9,13 +9,13 @@ node {
 	
 	stage('Anypoint CLI Login'){  
 	   sh "which anypoint-cli"
-	   sh "anypoint-cli --username=srikanth-mulesoft --password=Rockstar7*"
+		sh "anypoint-cli --username=${userName} --password=${password}"
 	   echo "pwd"
 	   sh "pwd"
 	  echo " below is list of applications deployed"
 	  sh "rm -rf commandResultFile"
-	  def script = sh "anypoint-cli --username=srikanth-mulesoft --password=Rockstar7* --environment Sandbox runtime-mgr standalone-application list -o text -f Application > commandResultFile"
-	  sh "anypoint-cli --username=srikanth-mulesoft --password=Rockstar7* --environment Sandbox runtime-mgr standalone-application list"
+		def script = sh "anypoint-cli --username=${userName} --password=${password} --environment Sandbox runtime-mgr standalone-application list -o text -f Application > commandResultFile"
+		sh "anypoint-cli --username=${userName} --password=${password} --environment Sandbox runtime-mgr standalone-application list"
 	  echo "$script"
 	  def applicationsList = readFile('commandResultFile').trim()
 	  echo "applicationsList is $applicationsList"
