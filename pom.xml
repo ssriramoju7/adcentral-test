@@ -37,8 +37,8 @@
 					      <uri>https://anypoint.mulesoft.com</uri>
 					      <target>macbook-pro-server</target>
 					      <targetType>server</targetType>
-					      <username>srikanth-mulesoft</username>
-					      <password>Rockstar7*</password>
+					      <username>${userName}</username>
+					      <password>${password}</password>
 					      <environment>Sandbox</environment>
 					      <properties>
 					        <env>qa</env>
